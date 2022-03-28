@@ -4,13 +4,22 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import modelo.Dueño;
+import modelo.Participante;
+import procesamiento.Proyecto;
+
 public class ControladorProyectos {
 
-
+		HashMap<String, Proyecto> proyectos = new HashMap<>();
 		/**
 		 * Ejecuta la aplicaciÃ³n: le muestra el menÃº al usuario y la pide que ingrese
 		 * una opciÃ³n, y ejecuta la opciÃ³n seleccionada por el usuario. Este proceso se
@@ -57,8 +66,8 @@ public class ControladorProyectos {
 			}
 			}
 			/**
-			 * Muestra al usuario el menÃº con las opciones para que escoja la siguiente
-			 * acciÃ³n que quiere ejecutar.
+			 * Muestra al usuario el menu con las opciones para que escoja la siguiente
+			 * accion que quiere ejecutar.
 			 */
 			public void mostrarMenu()
 			{
@@ -82,8 +91,32 @@ public class ControladorProyectos {
 			
 			private void CrearProyecto() {
 				//Por defecto el que creó el proyecto queda como dueño
-				;
 				
+				String nombre = input("Ingrese el nombre del proyecto");
+					
+				Proyecto elProyecto = proyectos.get(nombre);
+				if (elProyecto == null)
+				{
+					String dueño = input("Por ser la persona que va a crear este proyecto quedará asignado como el dueño\n Ingrese su nombre");
+					String correo = input("Ingrese su correo");
+					
+					String descripcion = input("Ingrese una descripcion para el proyecto");
+					String tiposs = input("Ingrese los tipos de actividades que se podran realizar en este proyecto separados por comas");
+					String pattern = "dd-MM-yyyy";
+					String fechain = new SimpleDateFormat(pattern).format(new Date());
+					System.out.println(fechain);
+					String fechafin = null; //Finalizar proyecto
+					
+					ArrayList<String> tipos = new ArrayList<String>(Arrays.asList(tiposs.split(",")));
+					ArrayList<Participante> participantes = new ArrayList<Participante>(); ////Lista con los participantes debe agregar al dueño
+					
+					elProyecto = new Proyecto( descripcion, dueño, correo, fechain, fechafin, tipos);				
+					proyectos.put(nombre, elProyecto);
+				}
+				else {
+					Dueño dueño = elProyecto.getDueño();
+					System.out.println("-Ya existe un proyecto con ese nombre creado por "+ dueño.toString()+"-");
+				}
 				}
 			
 			private void IniciarActividad(){
