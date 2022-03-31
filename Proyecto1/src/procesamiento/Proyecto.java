@@ -1,7 +1,9 @@
 package procesamiento;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import modelo.Actividad;
 import modelo.Dueño;
 import modelo.Participante;
 
@@ -14,6 +16,7 @@ public class Proyecto {
 	private String fechain;
 	private String fechafin;
 	private ArrayList<String> tipos;
+	private HashMap<String,Actividad> actividades;
 	
 	
 	public Proyecto( String descripcion1, Participante dueño1, String correo, String fechain1, String fechafin1,ArrayList<String> tipos1)
@@ -25,6 +28,7 @@ public class Proyecto {
 		this.fechafin = fechafin1;
 		this.tipos = tipos1;
 		this.participantes = new ArrayList<Participante>();
+		this.actividades = new HashMap<String,Actividad>();
 	
 	}
 	
@@ -46,6 +50,10 @@ public class Proyecto {
 	
 	public ArrayList<String> getTiposActividades() {
 		return tipos;
+	}
+	
+	public HashMap<String,Actividad> getActividades() {
+		return actividades;
 	}
 	
 	public ArrayList<Participante> getParticipantes() {

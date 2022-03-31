@@ -6,8 +6,18 @@ import java.util.ArrayList;
 
 
 public class Actividad {
-	public Actividad(String nombre, String descripcion, String tipo, String fecha, //Time horaInicio, Time horaFin,
-			String participante, int tiempoTotal) {
+	private String Nombre;
+	private String Descripcion;
+	private String Tipo;
+	private String Fecha;
+	//private Time HoraInicio;
+	//private Time HoraFin;
+	private Participante participante;
+	private int TiempoTotal; //min
+	private int DiasTrabajados;
+	
+	public Actividad(String nombre, String descripcion, String tipo, String fecha, String fechafin,String horaInicio, String horaFin,
+			Participante participante1) {
 		
 		this.Nombre = nombre;
 		this.Descripcion = descripcion;
@@ -15,19 +25,10 @@ public class Actividad {
 		this.Fecha = fecha;
 		//this.HoraInicio = horaInicio;
 		//this.HoraFin = horaFin;
-		this.Participante = participante;
-		this.TiempoTotal = tiempoTotal;
+		this.participante = participante1;
+		this.TiempoTotal = 0;
+		this.DiasTrabajados = 0;
 	}
-
-	private String Nombre;
-	private String Descripcion;
-	private String Tipo;
-	private String Fecha;
-	//private Time HoraInicio;
-	//private Time HoraFin;
-	private String Participante;
-	private int TiempoTotal;
-	
 
 
 	public String getNombre() {
@@ -53,29 +54,25 @@ public class Actividad {
 	//public Time getHoraFin() {
 		//return HoraFin;
 	//}
+	
+	//public int getDiasTrabajados()
+	//Hacer calculos
 
-	public String getParticipante() {
-		return Participante;
+	public Participante getParticipante() {
+		return participante;
 	}
 
 	public int getTiempoTotal() {
 		return TiempoTotal;
 	}
 	
-	void ModificarFecha() {
-		;
-	}
-	void ModificarHora() {
-		;
-	}
+	
 	public static Instant IniciarCronometro() {
 		Instant Inicio=Cronometro.Instante();
 		;
 		return Inicio;
 	}
-	void PausarCronometro() {
-		;
-	}
+	
 	public static void FinalizarCronometro(Instant Inicial) {
 		Instant Fin=Cronometro.Instante();
 		Cronometro.Calcular(Inicial,Fin);
