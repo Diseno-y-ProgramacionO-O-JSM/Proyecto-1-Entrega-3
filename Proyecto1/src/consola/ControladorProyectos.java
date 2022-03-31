@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,14 +13,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import modelo.Actividad;
 import modelo.Dueño;
 import modelo.Participante;
 import procesamiento.Proyecto;
 
 public class ControladorProyectos {
 
+		HashMap<String, Participante> participantes = new HashMap<>();
 		HashMap<String, Proyecto> proyectos = new HashMap<>();
+		HashMap<String, Actividad> actividades = new HashMap<>();
+		
 		/**
 		 * Ejecuta la aplicaciÃ³n: le muestra el menÃº al usuario y la pide que ingrese
 		 * una opciÃ³n, y ejecuta la opciÃ³n seleccionada por el usuario. Este proceso se
@@ -28,6 +34,7 @@ public class ControladorProyectos {
 		public void ejecutarAplicacion()
 		{
 			System.out.println("PROYECTOS\n");
+			Instant Temporizador = null;
 
 			boolean continuar = true;
 			while (continuar)
@@ -40,16 +47,18 @@ public class ControladorProyectos {
 						RegistroUsuario();
 					else if (opcion_seleccionada == 2 )
 						CrearProyecto();
-					else if (opcion_seleccionada == 3 )
-						IniciarActividad();
 					else if (opcion_seleccionada == 4 )
+						Temporizador=IniciarActividad();
+					else if (opcion_seleccionada == 3 )
 						AgregarParticipante();
 					else if (opcion_seleccionada == 5 )
-						FinalizarActividad();
+						FinalizarActividad(Temporizador);
 					else if (opcion_seleccionada == 6 )
+						FinalizarProyecto();
+					else if (opcion_seleccionada == 7 )
 						GenerarReporte();
 					
-					else if (opcion_seleccionada == 7)
+					else if (opcion_seleccionada == 8)
 					{
 						System.out.println("Saliendo de la aplicaciÃ³n ...");
 						continuar = false;
@@ -77,16 +86,25 @@ public class ControladorProyectos {
 				System.out.println("3. Agregar participante");
 				System.out.println("4. Iniciar actividad");
 				System.out.println("5. Finalizar actividad");
-				System.out.println("6. Reporte usuario");
+				System.out.println("6. Finalizar proyecto");
+				System.out.println("7. Reporte usuario");
 			
-				System.out.println("7. Salir de la aplicacion\n");
+				System.out.println("8. Salir de la aplicacion\n");
 			}
 		
 			
 			private void RegistroUsuario() {
+				String nombre = input("Ingrese su nombre");
+				String correo = input("Ingrese su correo");
 				
-			;
-			
+				Random numAleatorio = new Random();
+				int id = numAleatorio.nextInt(1000) + 1;
+				
+				Participante elParticipante = participantes.get(nombre);
+				if (elParticipante == null);
+					elParticipante = new Participante(nombre, correo, id, false);
+					participantes.put(nombre, elParticipante);
+				
 			}
 			
 			private void CrearProyecto() {
@@ -98,30 +116,44 @@ public class ControladorProyectos {
 				if (elProyecto == null)
 				{
 					String dueño = input("Por ser la persona que va a crear este proyecto quedará asignado como el dueño\n Ingrese su nombre");
-					String correo = input("Ingrese su correo");
 					
-					String descripcion = input("Ingrese una descripcion para el proyecto");
-					String tiposs = input("Ingrese los tipos de actividades que se podran realizar en este proyecto separados por comas");
-					String pattern = "dd-MM-yyyy";
-					String fechain = new SimpleDateFormat(pattern).format(new Date());
-					System.out.println(fechain);
-					String fechafin = null; //Finalizar proyecto
+					Participante elParticipante = participantes.get(dueño);
+					if (elParticipante == null) {
+						System.out.println("No se ha registrado como usuario el participante");}
+					else {
+						String correo = elParticipante.getCorreo();
+						String descripcion = input("Ingrese una descripcion para el proyecto");
+						String tiposs = input("Ingrese los tipos de actividades que se podran realizar en este proyecto separados por comas");
+						String pattern = "dd-MM-yyyy";
+						String fechain = new SimpleDateFormat(pattern).format(new Date());
+						System.out.println(fechain);
+						String fechafin = null; //Finalizar proyecto
+						
+						ArrayList<String> tipos = new ArrayList<String>(Arrays.asList(tiposs.split(",")));					
+						
+						elProyecto = new Proyecto( descripcion, elParticipante, correo, fechain, fechafin, tipos);				
+						proyectos.put(nombre, elProyecto);
+						
+						elProyecto.AgregarParticipantes(elParticipante);
+						System.out.println(elProyecto.getDescripcion());
+						System.out.println(elProyecto.getDueño().getNombre());
+						System.out.println(tipos);
+						
+					}
 					
-					ArrayList<String> tipos = new ArrayList<String>(Arrays.asList(tiposs.split(",")));
-					ArrayList<Participante> participantes = new ArrayList<Participante>(); ////Lista con los participantes debe agregar al dueño
 					
-					elProyecto = new Proyecto( descripcion, dueño, correo, fechain, fechafin, tipos);				
-					proyectos.put(nombre, elProyecto);
 				}
 				else {
-					Dueño dueño = elProyecto.getDueño();
+					Participante dueño = elProyecto.getDueño();
 					System.out.println("-Ya existe un proyecto con ese nombre creado por "+ dueño.toString()+"-");
 				}
 				}
 			
-			private void IniciarActividad(){
+			private Instant IniciarActividad(){
 				//Puede ser a nombre de cualquier persona
-				;
+				Instant Inicial= Actividad.IniciarCronometro();
+				//Puede ser a nombre de cualquier persona
+					return Inicial;
 				
 				}
 			private void AgregarParticipante(){
@@ -130,10 +162,15 @@ public class ControladorProyectos {
 				
 				}
 			
-			private void FinalizarActividad() {
+			private void FinalizarActividad(Instant HoraIn) {
 				
-			;
+				Actividad.FinalizarCronometro(HoraIn);
 			}
+			
+			private void FinalizarProyecto() {
+				
+				;
+				}
 			
 			private void GenerarReporte() {
 				

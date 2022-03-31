@@ -9,21 +9,21 @@ public class Proyecto {
 	
 	//private Proyecto nombre;
 	private String descripcion;
-	private Dueño dueño; //Queda por defecto
+	private Participante dueño; //Queda por defecto
 	private ArrayList<Participante> participantes;
 	private String fechain;
 	private String fechafin;
 	private ArrayList<String> tipos;
 	
 	
-	public Proyecto( String descripcion1, String dueño1, String correo, String fechain1, String fechafin1,ArrayList<String> tipos1)
+	public Proyecto( String descripcion1, Participante dueño1, String correo, String fechain1, String fechafin1,ArrayList<String> tipos1)
 	{
 		//this.nombre = nombre1;
 		this.descripcion = descripcion1;
-		this.dueño = new Dueño(dueño1, correo); /// crear dueño
+		this.dueño=dueño1;
 		this.fechain = fechain1;
 		this.fechafin = fechafin1;
-		this.tipos = new ArrayList<String>();
+		this.tipos = tipos1;
 		this.participantes = new ArrayList<Participante>();
 	
 	}
@@ -32,7 +32,7 @@ public class Proyecto {
 		return descripcion;
 	}
 	
-	public Dueño getDueño() {
+	public Participante getDueño() {
 		return dueño;
 	}
 	
@@ -44,7 +44,7 @@ public class Proyecto {
 		return fechafin;
 	}
 	
-	public ArrayList<String> getTiposAvtividades() {
+	public ArrayList<String> getTiposActividades() {
 		return tipos;
 	}
 	
