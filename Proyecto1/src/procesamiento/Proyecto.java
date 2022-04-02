@@ -1,10 +1,11 @@
 package procesamiento;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import modelo.Actividad;
-import modelo.Dueño;
 import modelo.Participante;
 
 public class Proyecto {
@@ -63,6 +64,14 @@ public class Proyecto {
 	public void AgregarParticipantes( Participante participante) {////
 		participantes.add(participante);
 	}
+	
+	public void FechaFinal() {
+		String pattern = "dd-MM-yyyy";
+		String fechafinal = new SimpleDateFormat(pattern).format(new Date());
+		fechafin = fechafinal;
+	}
+	
+	
 	
 	
 	
