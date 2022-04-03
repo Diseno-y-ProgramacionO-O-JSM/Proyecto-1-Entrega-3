@@ -10,7 +10,8 @@ public class Actividad {
 	private String Nombre;
 	private String Descripcion;
 	private String Tipo;
-	private String Fecha;
+	private String Fecha1; //fechas que varían para hacer calculos
+	private String FechaIn;
 	private String FechaFin;
 	private String HoraInicio;
 	private String HoraFin;
@@ -24,13 +25,14 @@ public class Actividad {
 		this.Nombre = nombre;
 		this.Descripcion = descripcion;
 		this.Tipo = tipo;
-		this.Fecha = fecha;
+		this.FechaIn = fecha;
 		this.FechaFin = fechafin;
 		this.HoraInicio = horaInicio;
 		this.HoraFin = horaFin;
 		this.participante = participante1;
 		this.TiempoTotal = 0;
-		this.DiasTrabajados = 0;
+		this.DiasTrabajados = 1;
+		this.Fecha1=null;
 	}
 
 
@@ -47,11 +49,12 @@ public class Actividad {
 	}
 
 	public String getFecha() {
-		return Fecha;
+		return FechaIn;
 	}
 	
 	public void newFechaIn(String FechaIn) {
-		Fecha = FechaIn;
+		Fecha1 = FechaIn;
+		
 	}
 	
 	public String getFechaFin() {
@@ -77,28 +80,30 @@ public class Actividad {
 	public void newHoraFin(String Horafin) {
 		HoraFin = Horafin;
 	}
-	
-	//public int getDiasTrabajados()
-	//Hacer calculos
 
 	public Participante getParticipante() {
 		return participante;
 	}
 
-	public void getTiempoTotal(String FechaIn, String HoraIn,String FechaFin,String HoraFin) {
+	public ArrayList<Integer> getTiempoTotal(String FechaIn, String HoraIn,String FechaFin,String HoraFin) {
 		String FechaI = FechaIn+" "+HoraIn+":00";
 		String FechaF = FechaFin+" "+HoraFin+":00";
 		ArrayList<Integer> tiempos = findDifference(FechaI, FechaF);
 		
 		Integer mins = tiempos.get(0)*525960 + tiempos.get(1)*1440+tiempos.get(2)*60+tiempos.get(3); //hola :)
 		
-		Integer dias = tiempos.get(1);
-		
 		TiempoTotal = TiempoTotal + mins;
-		DiasTrabajados = DiasTrabajados + dias;
 		
-		System.out.println(TiempoTotal);
-		System.out.println(DiasTrabajados);
+		
+		return tiempos;
+	}
+	
+	public Integer getTiempo() {
+		return TiempoTotal;
+	}
+	
+	public Integer getDias() {
+		return DiasTrabajados;
 	}
 	
 	public static Instant IniciarCronometro() {
@@ -112,11 +117,6 @@ public class Actividad {
 		Cronometro.Calcular(Inicial,Fin);
 		;
 	}
-	void RegistrarTiempo() {
-		;
-	}
-	
-	
 	
 	public  ArrayList<Integer> findDifference(String start_date, String end_date)
     {
@@ -125,7 +125,6 @@ public class Actividad {
             = new SimpleDateFormat(
                 "dd-MM-yyyy HH:mm:ss");
   
-        // Try Block
         try {
             Date d1 = sdf.parse(start_date);
             Date d2 = sdf.parse(end_date);
@@ -157,7 +156,7 @@ public class Actividad {
                   % 365;
   
             
-            int deltaTiempo = (int) difference_In_Time;
+            
             int deltaSegundos = (int) difference_In_Seconds;
             int deltaMinutos = (int) difference_In_Minutes;
             int deltaHoras = (int) difference_In_Hours;

@@ -1,16 +1,13 @@
-package procesamiento;
+package modelo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import modelo.Actividad;
-import modelo.Participante;
-
 public class Proyecto {
 	
-	//private Proyecto nombre;
+	private String nombre;
 	private String descripcion;
 	private Participante dueño; //Queda por defecto
 	private ArrayList<Participante> participantes;
@@ -20,9 +17,9 @@ public class Proyecto {
 	private HashMap<String,Actividad> actividades;
 	
 	
-	public Proyecto( String descripcion1, Participante dueño1, String correo, String fechain1, String fechafin1,ArrayList<String> tipos1)
+	public Proyecto(String nombre1,String descripcion1, Participante dueño1, String correo, String fechain1, String fechafin1,ArrayList<String> tipos1)
 	{
-		//this.nombre = nombre1;
+		this.nombre = nombre1;
 		this.descripcion = descripcion1;
 		this.dueño=dueño1;
 		this.fechain = fechain1;
@@ -31,6 +28,11 @@ public class Proyecto {
 		this.participantes = new ArrayList<Participante>();
 		this.actividades = new HashMap<String,Actividad>();
 	
+	}
+	
+	
+	public String getNombre() {
+		return nombre;
 	}
 	
 	public String getDescripcion() {
