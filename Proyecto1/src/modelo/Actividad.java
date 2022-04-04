@@ -91,13 +91,18 @@ public class Actividad {
 	}
 
 	public ArrayList<Integer> getTiempoTotal(String FechaIn, String HoraIn,String FechaFin,String HoraFin) {
+	
 		String FechaI = FechaIn+" "+HoraIn+":00";
 		String FechaF = FechaFin+" "+HoraFin+":00";
+		
 		ArrayList<Integer> tiempos = tiemposs(FechaI, FechaF);
 		
 		Integer mins = tiempos.get(0)*525960 + tiempos.get(1)*1440+tiempos.get(2)*60+tiempos.get(3); //hola :)
-		
-		TiempoTotal = TiempoTotal + mins;
+		if (mins>=0)
+			TiempoTotal = TiempoTotal + mins;
+		else {
+			System.out.println("Los valores de las horas que acaba de ingresar son incoherentes (la hora de fin es menor que la de incio)");
+		}
 		
 		
 		return tiempos;

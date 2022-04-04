@@ -82,23 +82,18 @@ public class CreadorTxt {
 	            		
 	            		String tipo = actividades.get(i).getTipo();
 	            		Integer tiempotot = actividades.get(i).getTiempo();
-	        			System.out.println(tipo);
 	        			
 	            		if (!(valores.containsKey(tipo))) {
 	            			ArrayList<Integer> val = new ArrayList<Integer>();
 	            			val.add(tiempotot);
-	            			System.out.println(val);
 	            			valores.put(tipo,val);
 	            		}
 	            		else {
 	            			ArrayList<Integer> lista = valores.get(tipo);
 	            			lista.add(tiempotot);
-	            			System.out.println(lista);
 	            			valores.put(tipo,lista);
 	            		}
 	            		
-	            		
-	            		System.out.println(valores);
             		}
             		
             	}
@@ -143,9 +138,13 @@ public class CreadorTxt {
             	
             String correo = elParticipante.getCorreo();
             bw.write("\n + "+nombre+" +");
+            System.out.println("\n + "+nombre+" +");
             bw.write("\n ");
+            System.out.println("\n ");
             bw.write("\n Correo: "+correo);
+            System.out.println("\n"+correo);
             bw.write("\n ");
+            System.out.println("\n ");
         	HashMap<String,ArrayList<Integer>> valores = new HashMap<String,ArrayList<Integer>>();
             ArrayList<Integer> total = new ArrayList<Integer>();
 			ArrayList<Actividad> actividades = elParticipante.getActividades(); 
@@ -155,12 +154,19 @@ public class CreadorTxt {
             	Proyecto proy = act.getProyecto();
             	String P = proy.getNombre();
         		bw.write("\n Actividad: "+act.getNombre());
+        		System.out.println("\n Actividad: "+act.getNombre());
         		bw.write("\n\t Proyecto: "+P);
+        		System.out.println("\n\t Proyecto: "+P);
         		bw.write("\n\t Descripción: "+act.getDescripcion());
+        		System.out.println("\n\t Descripción: "+act.getDescripcion());
         		bw.write("\n\t Tipo: "+act.getTipo());
+        		System.out.println("\n\t Tipo: "+act.getTipo());
         		bw.write("\n\t Fecha inicio actividad: "+act.getFecha());
+        		System.out.println("\n\t Fecha inicio actividad: "+act.getFecha());
         		bw.write("\n\t Fecha fin actividad: "+act.getFechaFin());
+        		System.out.println("\n\t Fecha fin actividad: "+act.getFechaFin());
         		bw.write("\n\t Tiempo total: "+act.getTiempo()+ " minutos");
+        		System.out.println("\n\t Tiempo total: "+act.getTiempo()+ " minutos");
         		total.add(act.getTiempo());
             		
             		String tipo = actividades.get(i).getTipo();
@@ -169,17 +175,16 @@ public class CreadorTxt {
         			
             		if (!(valores.containsKey(tipo))) {
             			ArrayList<Integer> val = new ArrayList<Integer>();
-            			val.add(tiempotot);
-            			System.out.println(val);
+            			val.add(tiempotot);           			
             			valores.put(tipo,val);
             		}
             		else {
             			ArrayList<Integer> lista = valores.get(tipo);
             			lista.add(tiempotot);
-            			System.out.println(lista);
             			valores.put(tipo,lista);
         		}
             		bw.write("\n ");
+            		System.out.println("\n");
   			
 			}
         	for (String llave:valores.keySet()) {
@@ -190,7 +195,9 @@ public class CreadorTxt {
         	            TotalSum=TotalSum+val.get(a);
         	        }
         	    bw.write("\n ");
+        	    
         	    bw.write("\n Tiempo promedio para el tipo de actividad "+llave+": "+TotalSum/val.size()+" minutos");
+        	    System.out.println("\n Tiempo promedio para el tipo de actividad "+llave+": "+TotalSum/val.size()+" minutos");
         	}
         	
         	int Total=0;
@@ -198,7 +205,9 @@ public class CreadorTxt {
         		Total=Total+total.get(d);
         	}
         	bw.write("\n ");
-        	bw.write("\n Tiempo total trabajado: "+Total+" minutos");
+        	
+        	bw.write("\n Tiempo total trabajado: "+Total+" minutos\n");
+        	System.out.println("\n Tiempo total trabajado: "+Total+" minutos");
         	
             bw.close();	
         }

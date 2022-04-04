@@ -26,11 +26,6 @@ public class ControladorProyectos {
 		Actividad actividad = null;
 		ArrayList<Integer> ListaAbreYCierra = new ArrayList<Integer>();
 		
-		/**
-		 * Ejecuta la aplicación: le muestra el menú al usuario y la pide que ingrese
-		 * una opción, y ejecuta la opción seleccionada por el usuario. Este proceso se
-		 * repite hasta que el usuario seleccione la opción de abandonar la aplicación.
-		 */
 		public void ejecutarAplicacion()
 		{
 			System.out.println("PROYECTOS\n");
@@ -68,6 +63,7 @@ public class ControladorProyectos {
 						else {
 							System.out.println("Hay una actividad en curso");
 						}}
+		
 					else if (opcion_seleccionada == 9)
 					{
 						System.out.println("Saliendo de la aplicacion ...");
@@ -98,10 +94,11 @@ public class ControladorProyectos {
 				System.out.println("6. Finalizar actividad");
 				System.out.println("7. Finalizar proyecto");
 				System.out.println("8. Reporte usuario");
-			
-				System.out.println("9. Salir de la aplicacion\n");
+				System.out.println("9. Correr con archivo de prueba");
+				System.out.println("10. Salir de la aplicacion\n");
 			}
-		
+			
+			
 			
 			private void RegistroUsuario() {
 				String nombre = input("Ingrese su nombre");
@@ -133,7 +130,7 @@ public class ControladorProyectos {
 					else {
 						String correo = elParticipante.getCorreo();
 						String descripcion = input("Ingrese una descripcion para el proyecto");
-						String tiposs = input("Ingrese los tipos de actividades que se podran realizar en este proyecto separados por comas");
+						String tiposs = input("Ingrese los tipos de actividades que se podran realizar en este proyecto separados por comas SIN ESPACIO");
 						String pattern = "dd-MM-yyyy";
 						String fechain = new SimpleDateFormat(pattern).format(new Date());
 						String fechafin = null; //Finalizar proyecto						
@@ -297,7 +294,7 @@ public class ControladorProyectos {
 					        String EleccionAct = input("Digite el numero correspondiente a la actividad");
 					        String tipo = Listita.get(Integer.parseInt(EleccionAct)-1);
 					        
-					        
+					        	System.out.println("Asegurese de poner fechas coherentes\n");
 								String fechain = input("Ingrese la fecha de inicio la forma dd-MM-yyyy");
 								String fechafin = input("Ingrese la fecha de fin de la forma dd-MM-yyyy");
 								String horain = input("Ingrese la hora de inicio en el formato de 24 horas hh:mm"); 
@@ -365,6 +362,7 @@ public class ControladorProyectos {
 					CreadorTxt.txtProyecto(elProyecto);
 					}		
 				}
+			
 			
 			private void GenerarReporte() {
 				
