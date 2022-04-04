@@ -1,0 +1,37 @@
+
+ + Carlos Perdomo +
+ 
+ Correo: c.perdomo@uniandes.edu.co
+ 
+ Actividad: Actividad Fuera De Tiempo
+	 Proyecto: Proyecto 1
+	 Descripción: Actividad prueba
+	 Tipo: Diseno
+	 Fecha inicio actividad: 01-04-2022
+	 Fecha fin actividad: 02-04-2022
+	 Tiempo total: 220 minutos
+ 
+ Actividad: Actividad En Tiempo Real
+	 Proyecto: Proyecto 1
+	 Descripción: Prueba actividad en tiempo real
+	 Tipo: Investigacion
+	 Fecha inicio actividad: 03-04-2022
+	 Fecha fin actividad: 03-04-2022
+	 Tiempo total: 5 minutos
+ 
+ Actividad: Actividad Fuera De Tiempo 2
+	 Proyecto: Proyecto 1
+	 Descripción: Actividad de prueba 2
+	 Tipo: Documentacion
+	 Fecha inicio actividad: 20-03-2022
+	 Fecha fin actividad: 20-03-2022
+	 Tiempo total: 50 minutos
+ 
+ 
+ Tiempo promedio para el tipo de actividad Investigacion: 5 minutos
+ 
+ Tiempo promedio para el tipo de actividad Diseno: 220 minutos
+ 
+ Tiempo promedio para el tipo de actividad Documentacion: 50 minutos
+ 
+ Tiempo total trabajado: 275 minutos

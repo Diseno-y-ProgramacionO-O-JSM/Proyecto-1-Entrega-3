@@ -1,0 +1,7 @@
+1;Carlos Perdomo;c.perdomo@uniandes.edu.co
+2;Proyecto 1;Carlos Perdomo;Proyecto prueba;Diseno,Investigacion,Documentacion,Implementacion,Pruebas;
+5;Proyecto 1;Actividad Fuera De Tiempo;Carlos Perdomo;Actividad de prueba;1;01-04-2022;02-04-2022;21:40;01:20
+4;Proyecto 1;Actividad En Tiempo Real;Carlos Perdomo;Actividad En Tiempo Real;2;03-04-2022;03-04-2022;21:54;21:59
+5;Proyecto 1;Actividad Fuera De Tiempo 2;Carlos Perdomo;Actividad de prueba 2;1;20-03-2022;20-04-2022;09:30;10:20
+7;Proyecto 1
+8;Carlos Perdomo

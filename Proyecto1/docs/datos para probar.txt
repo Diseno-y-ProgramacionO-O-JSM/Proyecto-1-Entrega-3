@@ -1,0 +1,54 @@
+//Con estos datos se podrá probar la aplicacion
+
++ Opcion 1 - registrar usuario
+Nombre: Santiago Vargas
+Correo: s.vargasp1@uniandes.edu.co
+
++ Opcion 1 
+Nombre: Juan Esteban Cuellar
+Correo: j.cuellara@uniandes.edu.co
+
++ Opcion 1 
+Nombre: Marilyn Joven
+Correo: m.joven@uniandes.edu.co
+
+
++ Opcion 2 - crear proyecto
+Nombe proyecto: Proyecto De Diseño y Programacion
+Dueño: Marilyn Joven
+Descripción: Proyecto restaurante;
+Tipos de actividades: Diseno,Implementacion,Pruebas
+
++ Opcion 5
+Nombre proyecto: Proyecto De Diseño y Programacion
+Nombre actividad: Actividad Fuera De Tiempo;
+Participante: Juan Esteban Cuellar
+Descripcion: Actividad de implementacion
+Tipo: 2
+Fecha inicio: 01-03-2022
+Fecha fin: 02-03-2022
+Hora Inicio: 20:40
+Hora Fin: 01:30
+
++ Opcion 5
+Nombre proyecto: Proyecto De Diseño y Programacion
+Nombre actividad: Actividad Fuera De Tiempo 2;
+Participante: Santiago Vargas
+Descripcion: Actividad de diseño
+Tipo: 1
+Fecha inicio: 05-03-2022
+Fecha fin: 05-03-2022
+Hora Inicio: 09:35
+Hora Fin: 13:05
+
++ Opcion 7 - finalizar proyecto
+Nombre proyecto: Proyecto De Diseño y Programacion
+
++ Opcion 8 - generar reporte participante
+Participante: Juan Esteban Cuellar
+
++ Opcion 8 
+Participante: Santiago Vargas
+
++ Opcion 8 
+Participante: Marilyn Joven
