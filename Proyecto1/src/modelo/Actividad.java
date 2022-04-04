@@ -16,11 +16,12 @@ public class Actividad {
 	private String HoraInicio;
 	private String HoraFin;
 	private Participante participante;
+	private Proyecto proyecto;
 	private int TiempoTotal; //mins
-	private int DiasTrabajados;
+
 	
 	public Actividad(String nombre, String descripcion, String tipo, String fecha, String fechafin,String horaInicio, String horaFin,
-			Participante participante1) {
+			Participante participante1, Proyecto proyecto1) {
 		
 		this.Nombre = nombre;
 		this.Descripcion = descripcion;
@@ -31,8 +32,8 @@ public class Actividad {
 		this.HoraFin = horaFin;
 		this.participante = participante1;
 		this.TiempoTotal = 0;
-		this.DiasTrabajados = 1;
 		this.Fecha1=null;
+		this.proyecto=proyecto1;
 	}
 
 
@@ -84,11 +85,15 @@ public class Actividad {
 	public Participante getParticipante() {
 		return participante;
 	}
+	
+	public Proyecto getProyecto() {
+		return proyecto;
+	}
 
 	public ArrayList<Integer> getTiempoTotal(String FechaIn, String HoraIn,String FechaFin,String HoraFin) {
 		String FechaI = FechaIn+" "+HoraIn+":00";
 		String FechaF = FechaFin+" "+HoraFin+":00";
-		ArrayList<Integer> tiempos = findDifference(FechaI, FechaF);
+		ArrayList<Integer> tiempos = tiemposs(FechaI, FechaF);
 		
 		Integer mins = tiempos.get(0)*525960 + tiempos.get(1)*1440+tiempos.get(2)*60+tiempos.get(3); //hola :)
 		
@@ -100,10 +105,6 @@ public class Actividad {
 	
 	public Integer getTiempo() {
 		return TiempoTotal;
-	}
-	
-	public Integer getDias() {
-		return DiasTrabajados;
 	}
 	
 	public static Instant IniciarCronometro() {
@@ -118,7 +119,7 @@ public class Actividad {
 		;
 	}
 	
-	public  ArrayList<Integer> findDifference(String start_date, String end_date)
+	public  ArrayList<Integer> tiemposs(String start_date, String end_date)
     {
   
         SimpleDateFormat sdf

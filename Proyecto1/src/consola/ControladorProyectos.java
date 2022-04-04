@@ -60,7 +60,7 @@ public class ControladorProyectos {
 						FinalizarProyecto();
 					
 					else if (opcion_seleccionada == 8 ) {
-						if ((ListaAbreYCierra.stream().filter(t->t.equals(4)).count()) == 0){System.out.println("No se puede generar un reporte porque no se ha completado alguna actividad.");}
+						if ((ListaAbreYCierra.stream().filter(t->t.equals(4)).count()) == 0 && (ListaAbreYCierra.stream().filter(t->t.equals(5)).count())==0){System.out.println("No se puede generar un reporte porque no se ha completado alguna actividad.");}
 						else if ((ListaAbreYCierra.stream().filter(t->t.equals(4)).count()) == (ListaAbreYCierra.stream().filter(t->t.equals(6)).count()))
 						{GenerarReporte();
 						
@@ -83,11 +83,8 @@ public class ControladorProyectos {
 					System.out.println("Debe seleccionar uno de los numeros de las opciones.");
 				}
 			}
-			}
-			/**
-			 * Muestra al usuario el menu con las opciones para que escoja la siguiente
-			 * accion que quiere ejecutar.
-			 */
+		}
+			
 			public void mostrarMenu()
 			{
 				
@@ -107,8 +104,8 @@ public class ControladorProyectos {
 		
 			
 			private void RegistroUsuario() {
-				String nombre = "Marilyn"; //input("Ingrese su nombre");
-				String correo = "m";//input("Ingrese su correo");
+				String nombre = input("Ingrese su nombre");
+				String correo = input("Ingrese su correo");
 				
 				Random numAleatorio = new Random();
 				int id = numAleatorio.nextInt(1000) + 1;
@@ -123,25 +120,23 @@ public class ControladorProyectos {
 			private void CrearProyecto() {
 				//Por defecto el que creó el proyecto queda como dueño
 				
-				String nombre = "Proyecto";//input("Ingrese el nombre del proyecto");
+				String nombre = input("Ingrese el nombre del proyecto");
 					
 				Proyecto elProyecto = proyectos.get(nombre);
 				if (elProyecto == null)
 				{
-					String dueño = "Marilyn";//input("Por ser la persona que va a crear este proyecto quedará asignado como el dueño\nIngrese su nombre");
+					String dueño = input("Por ser la persona que va a crear este proyecto quedará asignado como el dueño\nIngrese su nombre");
 					
 					Participante elParticipante = participantes.get(dueño);
 					if (elParticipante == null) {
 						System.out.println("No se ha registrado como usuario el participante");}
 					else {
 						String correo = elParticipante.getCorreo();
-						String descripcion = "Prueba";//input("Ingrese una descripcion para el proyecto");
-						String tiposs = "Diseño,Rural,Economía";//input("Ingrese los tipos de actividades que se podran realizar en este proyecto separados por comas");
+						String descripcion = input("Ingrese una descripcion para el proyecto");
+						String tiposs = input("Ingrese los tipos de actividades que se podran realizar en este proyecto separados por comas");
 						String pattern = "dd-MM-yyyy";
 						String fechain = new SimpleDateFormat(pattern).format(new Date());
-						System.out.println(fechain);
-						String fechafin = null; //Finalizar proyecto
-						
+						String fechafin = null; //Finalizar proyecto						
 						
 						ArrayList<String> tipos = new ArrayList<String>(Arrays.asList(tiposs.split(",")));					
 						
@@ -149,9 +144,6 @@ public class ControladorProyectos {
 						proyectos.put(nombre, elProyecto);
 						
 						elProyecto.AgregarParticipantes(elParticipante);
-						System.out.println(elProyecto.getDescripcion());
-						System.out.println(elProyecto.getDueño().getNombre());
-						System.out.println(tipos);
 						
 					}		
 				}
@@ -163,9 +155,8 @@ public class ControladorProyectos {
 			
 			private Instant IniciarActividad(){
 				//Puede ser a nombre de cualquier persona
-			
-				
-				String proy = "Proyecto";//input("Ingrese el nombre del proyecto");
+
+				String proy = input("Ingrese el nombre del proyecto");
 				
 				Proyecto elProyecto = proyectos.get(proy);
 				
@@ -197,16 +188,13 @@ public class ControladorProyectos {
 					        
 					        String EleccionAct = input("Digite el numero correspondiente a la actividad");
 					        String tipo = Listita.get(Integer.parseInt(EleccionAct)-1);
-					        
-					        System.out.println(Listita.get(Integer.parseInt(EleccionAct)-1));
-					        
-					        
+					     
 							String pattern = "dd-MM-yyyy";
 							String fechain = new SimpleDateFormat(pattern).format(new Date());
 							String fechafin = null;
 							String horain = LocalTime.now().format(formatter);
 							String horafin = null;
-							laActividad = new Actividad(nombre, descripcion, tipo, fechain, fechafin, horain,horafin,elParticipante);
+							laActividad = new Actividad(nombre, descripcion, tipo, fechain, fechafin, horain,horafin,elParticipante, elProyecto);
 							actividad = laActividad;
 							map.put(nombre,laActividad);
 							elParticipante.agregarActividad(laActividad);
@@ -230,21 +218,18 @@ public class ControladorProyectos {
 							actividad = laActividad;
 						}
 						else {
-							System.out.println(part+part2);
 							System.out.println("El participante que está realizando esta actividad es otro.");
-						}
-						
+						}						
 					}
 				}
 			
-
 				Instant Inicial= Actividad.IniciarCronometro();
 				return Inicial;			
 				}
 			
 			private void AgregarParticipante(){
 				
-				String proy = "Proyecto";//input("Ingrese el nombre del proyecto");
+				String proy = input("Ingrese el nombre del proyecto");
 				
 				Proyecto elProyecto = proyectos.get(proy);
 				
@@ -252,25 +237,34 @@ public class ControladorProyectos {
 					System.out.println("El proyecto no existe");
 					}
 				else {
-					String part = "Marilyn";//input("Ingrese el nombre del participante");
+					String part =input("Ingrese el nombre del participante");
 					
 					Participante elParticipante = participantes.get(part);
 					if (elParticipante == null) {
 						System.out.println("No se ha registrado como usuario el participante");
 						}
 					else {
-						elProyecto.AgregarParticipantes(elParticipante);
+						Boolean presente = false;
+						ArrayList<Participante> participantes = elProyecto.getParticipantes();
+						for (int i=0;i<participantes.size();i++) {
+							String par = participantes.get(i).getNombre();
+							String par1 = elParticipante.getNombre();
+							if (par.equals(par1)){
+								presente = true;
+								System.out.println("El usuario ya es participante de este proyecto");
+							}
+						}
+						if (!presente) {
+							elProyecto.AgregarParticipantes(elParticipante);
+							}
+						}
 					}
-				}
 				
 				}
-			
-			
-			
-			
+		
 			private void RegistrarActividad() {
 				
-				String proy = "Proyecto";//input("Ingrese el nombre del proyecto");
+				String proy = input("Ingrese el nombre del proyecto");
 				
 				Proyecto elProyecto = proyectos.get(proy);
 				
@@ -284,13 +278,13 @@ public class ControladorProyectos {
 					Actividad laActividad = map.get(nombre);
 					if (laActividad == null) {
 						
-						String part = "Marilyn";//input("Ingrese su nombre");
+						String part = input("Ingrese su nombre");
 						Participante elParticipante = participantes.get(part);
 						if (elParticipante == null) {
 							System.out.println("No se ha registrado como usuario el participante");
 							}
 						else {
-							String descripcion = "Prueba";//input("Ingrese una descripcion de la actividad");
+							String descripcion = input("Ingrese una descripcion de la actividad");
 							System.out.println("Elija un tipo de actividad:");
 							
 							ArrayList<String> Listita =elProyecto.getTiposActividades();
@@ -303,16 +297,19 @@ public class ControladorProyectos {
 					        String EleccionAct = input("Digite el numero correspondiente a la actividad");
 					        String tipo = Listita.get(Integer.parseInt(EleccionAct)-1);
 					        
-							String fechain = input("Ingrese la fecha de inicio la forma dd-MM-yyyy");
-							String fechafin = input("Ingrese la fecha de fin de la forma dd-MM-yyyy");
-							String horain = input("Ingrese la hora de inicio en el formato de 24 horas hh:mm"); 
-							String horafin =  input("Ingrese la hora de finalización en el formato de 24 horas hh:mm"); 
-							laActividad = new Actividad(nombre, descripcion, tipo, fechain, fechafin, horain,horafin,elParticipante);
-							map.put(nombre,laActividad);
-							
-							laActividad.getTiempoTotal(laActividad.getFecha(),laActividad.getHoraInicio(),laActividad.getFechaFin(),laActividad.getHoraFin());
-							elParticipante.agregarActividad(laActividad);
+					        
+								String fechain = input("Ingrese la fecha de inicio la forma dd-MM-yyyy");
+								String fechafin = input("Ingrese la fecha de fin de la forma dd-MM-yyyy");
+								String horain = input("Ingrese la hora de inicio en el formato de 24 horas hh:mm"); 
+								String horafin =  input("Ingrese la hora de finalización en el formato de 24 horas hh:mm"); 
+								laActividad = new Actividad(nombre, descripcion, tipo, fechain, fechafin, horain,horafin,elParticipante, elProyecto);
+								map.put(nombre,laActividad);
+								
+								laActividad.getTiempoTotal(laActividad.getFecha(),laActividad.getHoraInicio(),laActividad.getFechaFin(),laActividad.getHoraFin());
+								elParticipante.agregarActividad(laActividad);
+					        
 						}
+						
 					}
 					else {
 						String part = input("Ingrese su nombre");
@@ -333,11 +330,14 @@ public class ControladorProyectos {
 							
 						}
 						else {
-							System.out.println(part+part2);
+							
 							System.out.println("El participante que está realizando esta actividad es otro.");
 						}
 					}
 				}
+				
+		        
+				
 				}
 
 			private void FinalizarActividad(Instant HoraIn) {
@@ -353,8 +353,6 @@ public class ControladorProyectos {
 			}
 			
 			private void FinalizarProyecto() {
-				//Solo los participantes de un proyecto podran finalizarlo
-				
 				String proy = input("Ingrese el nombre del proyecto");
 				
 				Proyecto elProyecto = proyectos.get(proy);
@@ -364,63 +362,24 @@ public class ControladorProyectos {
 					}
 				else {
 					elProyecto.FechaFinal();
-					CreadorTxt.ejecutar(elProyecto);
+					CreadorTxt.txtProyecto(elProyecto);
 					}		
 				}
 			
 			private void GenerarReporte() {
-				System.out.println("Reporte");
-				String nombre = input("Ingrese el nombre del proyecto");
 				
-				Proyecto elProyecto = proyectos.get(nombre);
-				if (elProyecto == null) {
-					System.out.println("El proyecto no existe");
-				}
-				else {
+				
 					String part = input("Ingrese el nombre del participante a generar reporte");
 					Participante elParticipante = participantes.get(part);
 					if (elParticipante == null) {
 						System.out.println("No se ha registrado como usuario el participante");
 						}
 					else {
-						Integer totalparticipante = 0;
-						ArrayList<Integer> val = new ArrayList<Integer>();
-						HashMap<String,ArrayList<Integer>> tiempo = new HashMap<String,ArrayList<Integer>>();
-						ArrayList<Actividad> actividades = elParticipante.getActividades();
-						
-						for(int i = 0; i < actividades.size(); i++) {
-							
-				            Actividad actividad = actividades.get(i);
-				            String tipo = actividad.getTipo();
-				            Integer tiempotot = actividad.getTiempo();
-				            totalparticipante = totalparticipante+tiempotot;
-				            
-				            ////
-				            ArrayList<Integer> valores = tiempo.get(tipo);
-				            
-				            
-				            if (!tiempo.keySet().contains(tipo)){
-				            	val.add(tiempotot);
-				            	val.add(1);
-				            	tiempo.put(tipo, val);				       
-				            	}
-				            else {
-				            	Integer t = valores.get(0) + tiempotot;
-				            	valores.set(0,t);
-				            	Integer pos = valores.get(1);
-				            	valores.set(1,pos+1);
-				            	
-				            	tiempo.put(tipo, valores);
-				            	}			            
-							}
-						System.out.println(tiempo);
-						
-						System.out.println(totalparticipante);
-						
-						}
+						CreadorTxt.txtParticipante(elParticipante);
+						System.out.println("Se Ha Generado El Reporte");
 					}
-				}	
-			
+					
+			}
 			
 			public String input(String mensaje)
 			{

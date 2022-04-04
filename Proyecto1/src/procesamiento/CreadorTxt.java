@@ -12,7 +12,7 @@ import modelo.Proyecto;
 
 public class CreadorTxt {
 	
-    public static void ejecutar(Proyecto proyecto){
+    public static void txtProyecto(Proyecto proyecto){
     	
         try {
         	String nombre = proyecto.getNombre();
@@ -68,35 +68,39 @@ public class CreadorTxt {
             	String correo = participante.getCorreo();
             	bw.write("\nParticipante: "+nombrep);
             	bw.write("\t Correo: "+correo);
+            	HashMap<String, Actividad> pact = proyecto.getActividades();
             	ArrayList<Actividad> actividades = participante.getActividades(); 
             	for(int  i= 0; i < actividades.size(); i++) {
-            		bw.write("\n");
-            		bw.write("\n Actividad: "+actividades.get(i).getNombre());
-            		bw.write("\n\t Descripción: "+actividades.get(i).getDescripcion());
-            		bw.write("\n\t Tipo: "+actividades.get(i).getTipo());
-            		bw.write("\n\t Fecha inicio actividad: "+actividades.get(i).getFecha());
-            		bw.write("\n\t Fecha fin actividad: "+actividades.get(i).getFechaFin());
-            		bw.write("\n\t Tiempo total: "+actividades.get(i).getTiempo()+ " minutos");
-            		
-            		String tipo = actividades.get(i).getTipo();
-            		Integer tiempotot = actividades.get(i).getTiempo();
-        			System.out.println(tipo);
-        			
-            		if (!(valores.containsKey(tipo))) {
-            			ArrayList<Integer> val = new ArrayList<Integer>();
-            			val.add(tiempotot);
-            			System.out.println(val);
-            			valores.put(tipo,val);
+            		if (pact.containsKey(actividades.get(i).getNombre())) {
+	            		bw.write("\n");
+	            		bw.write("\n Actividad: "+actividades.get(i).getNombre());
+	            		bw.write("\n\t Descripción: "+actividades.get(i).getDescripcion());
+	            		bw.write("\n\t Tipo: "+actividades.get(i).getTipo());
+	            		bw.write("\n\t Fecha inicio actividad: "+actividades.get(i).getFecha());
+	            		bw.write("\n\t Fecha fin actividad: "+actividades.get(i).getFechaFin());
+	            		bw.write("\n\t Tiempo total: "+actividades.get(i).getTiempo()+ " minutos");
+	            		
+	            		String tipo = actividades.get(i).getTipo();
+	            		Integer tiempotot = actividades.get(i).getTiempo();
+	        			System.out.println(tipo);
+	        			
+	            		if (!(valores.containsKey(tipo))) {
+	            			ArrayList<Integer> val = new ArrayList<Integer>();
+	            			val.add(tiempotot);
+	            			System.out.println(val);
+	            			valores.put(tipo,val);
+	            		}
+	            		else {
+	            			ArrayList<Integer> lista = valores.get(tipo);
+	            			lista.add(tiempotot);
+	            			System.out.println(lista);
+	            			valores.put(tipo,lista);
+	            		}
+	            		
+	            		
+	            		System.out.println(valores);
             		}
-            		else {
-            			ArrayList<Integer> lista = valores.get(tipo);
-            			lista.add(tiempotot);
-            			System.out.println(lista);
-            			valores.put(tipo,lista);
-            		}
             		
-            		
-            		System.out.println(valores);
             	}
             	
             	for (String llave:valores.keySet()) {
@@ -121,7 +125,88 @@ public class CreadorTxt {
         }
     
     }
+    
+    
+    public static void txtParticipante(Participante elParticipante){
+    	
+        try {
+        	
+        	String nombre = elParticipante.getNombre();
+        	String ruta = "C:\\Users\\maril\\git\\proyecto1\\Proyecto1\\docs\\Reporte_"+nombre +".txt";
+        		
+        	File file = new File(ruta);
+        	if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            	
+            String correo = elParticipante.getCorreo();
+            bw.write("\n + "+nombre+" +");
+            bw.write("\n ");
+            bw.write("\n Correo: "+correo);
+            bw.write("\n ");
+        	HashMap<String,ArrayList<Integer>> valores = new HashMap<String,ArrayList<Integer>>();
+            ArrayList<Integer> total = new ArrayList<Integer>();
+			ArrayList<Actividad> actividades = elParticipante.getActividades(); 
+        	for(int  i= 0; i < actividades.size(); i++) {
+        		
+            	Actividad act = actividades.get(i);
+            	Proyecto proy = act.getProyecto();
+            	String P = proy.getNombre();
+        		bw.write("\n Actividad: "+act.getNombre());
+        		bw.write("\n\t Proyecto: "+P);
+        		bw.write("\n\t Descripción: "+act.getDescripcion());
+        		bw.write("\n\t Tipo: "+act.getTipo());
+        		bw.write("\n\t Fecha inicio actividad: "+act.getFecha());
+        		bw.write("\n\t Fecha fin actividad: "+act.getFechaFin());
+        		bw.write("\n\t Tiempo total: "+act.getTiempo()+ " minutos");
+        		total.add(act.getTiempo());
+            		
+            		String tipo = actividades.get(i).getTipo();
+            		Integer tiempotot = actividades.get(i).getTiempo();
+        			
+        			
+            		if (!(valores.containsKey(tipo))) {
+            			ArrayList<Integer> val = new ArrayList<Integer>();
+            			val.add(tiempotot);
+            			System.out.println(val);
+            			valores.put(tipo,val);
+            		}
+            		else {
+            			ArrayList<Integer> lista = valores.get(tipo);
+            			lista.add(tiempotot);
+            			System.out.println(lista);
+            			valores.put(tipo,lista);
+        		}
+            		bw.write("\n ");
+  			
+			}
+        	for (String llave:valores.keySet()) {
+        		ArrayList<Integer> val = valores.get(llave);
+        		
+        	    int TotalSum=0;
+        	    for (int a=0;a<val.size();a++){
+        	            TotalSum=TotalSum+val.get(a);
+        	        }
+        	    bw.write("\n ");
+        	    bw.write("\n Tiempo promedio para el tipo de actividad "+llave+": "+TotalSum/val.size()+" minutos");
+        	}
+        	
+        	int Total=0;
+        	for (int d=0;d<total.size();d++) {
+        		Total=Total+total.get(d);
+        	}
+        	bw.write("\n ");
+        	bw.write("\n Tiempo total trabajado: "+Total+" minutos");
+        	
+            bw.close();	
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
+    }
 	
 }
